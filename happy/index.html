@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Friend 🐼</title>
+
+<style>
+    body {
+        height: 100vh;
+        margin: 0;
+        background: radial-gradient(circle at top, #b5eaea, #edf6f9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Segoe UI', sans-serif;
+        overflow: hidden;
+    }
+
+    .card {
+        background: white;
+        padding: 35px 45px;
+        border-radius: 25px;
+        text-align: center;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+        animation: popIn 1s ease;
+        z-index: 5;
+    }
+
+    h1 {
+        color: #0077b6;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: #444;
+        font-size: 18px;
+    }
+
+    .buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    button {
+        padding: 14px 30px;
+        font-size: 18px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .yes-button {
+        background: #48cae4;
+        color: white;
+        animation: pulse 2s infinite;
+    }
+
+    .no-button {
+        background: #ccc;
+    }
+
+    .no-button:hover {
+        animation: shake 0.4s;
+    }
+
+    /* Panda */
+    .panda {
+        font-size: 90px;
+        margin-bottom: 10px;
+        animation: pandaBounce 2s infinite;
+        text-shadow: 
+            4px 4px 0 rgba(0,0,0,0.15),
+            -2px -2px 0 rgba(255,255,255,0.8);
+    }
+
+    /* Floating shapes */
+    .float {
+        position: absolute;
+        bottom: -20px;
+        font-size: 20px;
+        animation: floatUp linear infinite;
+        opacity: 0.8;
+    }
+
+    /* Animations */
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-6px); }
+        50% { transform: translateX(6px); }
+        75% { transform: translateX(-6px); }
+        100% { transform: translateX(0); }
+    }
+
+    @keyframes popIn {
+        from { transform: scale(0.7); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes pandaBounce {
+        0%,100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    @keyframes floatUp {
+        from {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+        }
+        to {
+            transform: translateY(-120vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 Background music -->
+<audio autoplay loop>
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_1b7c7b30d6.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card" id="card">
+    <div class="panda">🐼</div>
+
+    <!-- ✏️ CHANGE NAMES HERE -->
+    <h1>Hey Aliza 💙</h1>
+    <p>
+        😊 <br><br>
+        Life is better with good friends… <br>
+        Sooo 👀
+    </p>
+
+    <h2>Will you be my friend? 🤝✨</h2>
+
+    <div class="buttons">
+        <button class="yes-button" onclick="handleYesClick()">Yes! 😄</button>
+        <button class="no-button" onclick="handleNoClick()">No 😐</button>
+    </div>
+</div>
+
+<script>
+    let messageIndex = 0;
+
+    const messages = [
+        "Are you sure? 🥺",
+        "Friends are awesome tho 😭",
+        "I bring snacks 🍿",
+        "And good vibes ✨",
+        "Okay you HAVE to say yes now 😆"
+    ];
+
+    function handleNoClick() {
+        const noButton = document.querySelector('.no-button');
+        const yesButton = document.querySelector('.yes-button');
+
+        noButton.textContent = messages[messageIndex];
+        messageIndex = (messageIndex + 1) % messages.length;
+
+        const size = parseFloat(
+            window.getComputedStyle(yesButton).fontSize
+        );
+        yesButton.style.fontSize = `${size * 1.25}px`;
+    }
+
+    function handleYesClick() {
+        document.getElementById('card').innerHTML = `
+            <div class="panda">🐼🎉</div>
+            <h1>YAY! FRIENDS! 💙</h1>
+            <p style="font-size:19px;">
+                You just unlocked:<br><br>
+                🤝 Lifetime friendship<br>
+                😂 Random laughs<br>
+            <br><br>
+                Thanks for being awesome ✨
+            </p>
+        `;
+        startEffects();
+    }
+
+    function startEffects() {
+        setInterval(() => {
+            const el = document.createElement("div");
+            el.className = "float";
+            el.innerHTML = ["💙","⭐","✨","🐼","🎉"][Math.floor(Math.random()*5)];
+            el.style.left = Math.random() * 100 + "vw";
+            el.style.fontSize = Math.random() * 20 + 15 + "px";
+            el.style.animationDuration = Math.random() * 3 + 4 + "s";
+            document.body.appendChild(el);
+
+            setTimeout(() => el.remove(), 7000);
+        }, 250);
+    }
+</script>
+
+</body>
+</html>
